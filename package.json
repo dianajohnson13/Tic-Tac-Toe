@@ -1,0 +1,29 @@
+{
+  "name": "tic-tac-toe",
+  "version": "1.0.0",
+  "description": "### Overview:",
+  "main": "index.js",
+  "engines": {
+    "npm": "3.5.3"
+  },
+  "dependencies": {
+    "express": "^4.13.4",
+    "node": "5.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "postinstall": "bower install",
+    "start": "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dianajohnson13/MKS-SF-mvp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dianajohnson13/MKS-SF-mvp/issues"
+  },
+  "homepage": "https://github.com/dianajohnson13/MKS-SF-mvp#readme"
+}

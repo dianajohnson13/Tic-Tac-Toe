@@ -1,0 +1,23 @@
+{
+  "name": "mvp",
+  "description": "mvp",
+  "main": "app.js",
+  "authors": [
+    "Diana <dianajohnson13@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/dianajohnson13/MKS-SF-mvp",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.18",
+    "angular-mocks": "~1.2.18",
+    "angular-route": "~1.2.18"
+  }
+}
