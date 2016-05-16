@@ -17,28 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+  > Tic-Tac-Toe
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  > The target audience is people who would like to play tic-tac-toe.
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  > The product is a tic-tac-toe game. Players will be able to play against the computer if they cannot find an opponent. It will track a users win count.
 
 ## Problem ##
-  > Describe the problem your product solves.
+  > Not enough tic-tack-toe
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  > It provides people with a place to play a fun game of tic-tac-toe and track their wins. It will also allow them to play against the computer if they do not have an opponent.
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  > "Come enjoy some fun tic-tac-toe!"
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  > All a play needs to do is click play and then click on their next position.
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  > "It's the most fun I've ever had playing tic-tac-toe"
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  > To test it out, play a game.
