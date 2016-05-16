@@ -4,6 +4,7 @@
   "description": "### Overview:",
   "main": "index.js",
   "dependencies": {
+    "bower": "^1.7.9",
     "express": "^4.13.4"
   },
   "devDependencies": {},
