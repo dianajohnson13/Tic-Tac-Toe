@@ -13,7 +13,6 @@ h1 {
 }
 
 .row {
-  
 }
 
 #board span {
@@ -24,4 +23,12 @@ h1 {
   width: 100px;
   height: 100px;
   border: solid 6px;
+}
+
+#scoreboard {
+  font-size: 20px;
+}
+
+.description {
+  font-weight: bold;
 }
