@@ -34,14 +34,10 @@ angular.module('ticTacToe.game', [])
 
     if ($scope.checkForWin()) {  //if won/game over
       $scope.playerOne.gamesPlayed++;
-      if ($scope.currPlayer === $scope.playerOne) {
-        $scope.playerOne.wins++;
-      }
+      if ($scope.currPlayer === $scope.playerOne) $scope.playerOne.wins++;
+      
       var resp = confirm($scope.currPlayer.name + ' has won the game! Click "OK" to play again.');
-      if (resp) {
-        $location.path('/game');
-        $scope.initGame();
-      }
+      if (resp) $scope.initGame();
     }
 
     if ($scope.currPlayer === $scope.playerOne && $scope.playsMade > 0) {
@@ -66,6 +62,7 @@ angular.module('ticTacToe.game', [])
   }
 
   $scope.initGame = function() {
+    $location.path('/game');
     $scope.resetBoard();
     $scope.remainingSpots = Object.keys($scope.board);
     $scope.currPlayer = $scope.playerOne
@@ -84,10 +81,7 @@ angular.module('ticTacToe.game', [])
     if ($scope.board['BL'].spot === mark && $scope.board['MM'].spot ===  mark && $scope.board['TR'].spot === mark) return true;
     if ($scope.playsMade === 9) {
       var resp = confirm('Tie Game. Click "OK" to play again');
-      if (resp) {
-        $location.path('/game');
-        $scope.initGame();
-      }
+      if (resp) $scope.initGame();
     }
     return false;
   }
