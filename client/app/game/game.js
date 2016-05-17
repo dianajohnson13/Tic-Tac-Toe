@@ -2,8 +2,12 @@ angular.module('ticTacToe.game', [])
 
 .controller('GameController', function($scope, $location) {
   $scope.board; 
+  $scope.playsMade;
+
+  // add wins and games played
 
   $scope.resetBoard = function() {
+    $scope.playsMade = 0;
     $scope.board = {
       TL: {row:0,col:0,spot:"-"}, TM: {row:0,col:1,spot:"-"}, TR: {row:0,col:2,spot:"-"},
       ML: {row:1,col:0,spot:"-"}, MM: {row:1,col:1,spot:"-"}, MR: {row:1,col:2,spot:"-"},
@@ -19,9 +23,8 @@ angular.module('ticTacToe.game', [])
 
   $scope.clickCell = function(cell) {
     if ($scope.board[cell].spot === "-" && $scope.currPlayer == $scope.playerOne.id) {
-      //mark cell with playersMark
       $scope.board[cell].spot = $scope.playerOne.mark; 
-      $scope.handleMove();
+      $scope.handleMove($scope.playerOne.name, $scope.playerOne.mark);
     } else if ($scope.currPlayer == $scope.playerOne.id) {
       alert("That spot is taken! Please choose an empty space");
     } else {
@@ -29,35 +32,47 @@ angular.module('ticTacToe.game', [])
     }
   };
 
-  $scope.handleMove = function() {
-    if ($scope.checkForWin()) {
-      var resp = confirm(' has won the game! Click "OK" to play again.');
-      if (resp = true) {
+  $scope.handleMove = function(player, mark) {
+    $scope.playsMade++;
+
+    if ($scope.checkForWin(mark)) {
+      var resp = confirm(player + ' has won the game! Click "OK" to play again.');
+      if (resp) {
         $scope.resetBoard();
         $location.path('/game');
       }
+    }
 
-    } else if ($scope.currPlayer === $scope.playerOne.id) {
-        $scope.currPlayer = $scope.playerTwo.id;
-        $scope.computerPlayerMove();
-      } else {
-        $scope.currPlayer = $scope.playerOne.id;
-      }
+    if ($scope.currPlayer === $scope.playerOne.id) {
+      $scope.currPlayer = $scope.playerTwo.id;
+      $scope.computerPlayerMove();
+    } else {
+      $scope.currPlayer = $scope.playerOne.id;
+    }
   };
 
-  $scope.checkForWin = function() {
-    // all that good logic
-    // if no one won, but all spaces are filled.. confirm("game over. no winner")
+  $scope.checkForWin = function(mark) {
+    if ($scope.board['TL'].spot === mark && $scope.board['TM'].spot ===  mark && $scope.board['TR'].spot === mark) return true;
+    if ($scope.board['ML'].spot === mark && $scope.board['MM'].spot ===  mark && $scope.board['MR'].spot === mark) return true;
+    if ($scope.board['BL'].spot === mark && $scope.board['BM'].spot ===  mark && $scope.board['BR'].spot === mark) return true;
+    if ($scope.board['TL'].spot === mark && $scope.board['ML'].spot ===  mark && $scope.board['BL'].spot === mark) return true;
+    if ($scope.board['TM'].spot === mark && $scope.board['MM'].spot ===  mark && $scope.board['BM'].spot === mark) return true;
+    if ($scope.board['TR'].spot === mark && $scope.board['MR'].spot ===  mark && $scope.board['BR'].spot === mark) return true;
+    if ($scope.board['TL'].spot === mark && $scope.board['MM'].spot ===  mark && $scope.board['BR'].spot === mark) return true;
+    if ($scope.board['BL'].spot === mark && $scope.board['MM'].spot ===  mark && $scope.board['TR'].spot === mark) return true;
+    if ($scope.playsMade === 9) {
+      var resp = confirm('Tie Game. Click "OK" to play again');
+      if (resp) {
+        $scope.resetBoard();
+        $location.path('/game');
+      }
+    }
     return false;
   }
 
   $scope.computerPlayerMove = function() {
     // get random move..
-    console.log('attempting computer move');
-    setTimeout(function() {
-      $scope.currPlayer = $scope.playerOne.id;
-    }, 200); // change to promise
-    
+    $scope.handleMove($scope.playerTwo.name, $scope.playerTwo.mark);
   }
 
 });
