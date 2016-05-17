@@ -1,11 +1,17 @@
 angular.module('ticTacToe.game', [])
 
-.controller('GameController', function($scope) {
-  $scope.board = [
-    ["-", "-", "-"],
-    ["-", "-", "-"],
-    ["-", "-", "-"]
-  ];
+.controller('GameController', function($scope, $location) {
+  $scope.board; 
+
+  $scope.resetBoard = function() {
+    $scope.board = [
+      ["-", "-", "-"],
+      ["-", "-", "-"],
+      ["-", "-", "-"]
+    ];
+  };
+
+  $scope.resetBoard();
 
   const modelRef = {
     TL: {row:0,col:0}, TM: {row:0,col:1}, TR: {row:0,col:2},
@@ -19,10 +25,9 @@ angular.module('ticTacToe.game', [])
 
   $scope.clickCell = function(cell) {
     if ($scope.board[modelRef[cell].row][modelRef[cell].col] === "-" && $scope.currPlayer == $scope.playerOne.id) {
-
-      $scope.board[modelRef[cell].row][modelRef[cell].col] = $scope.playerOne.mark; //mark cell with playersMark
-      // check if game has been won.. checkForWin()
-
+      //mark cell with playersMark
+      $scope.board[modelRef[cell].row][modelRef[cell].col] = $scope.playerOne.mark; 
+      $scope.handleMove();
     } else if ($scope.currPlayer == $scope.playerOne.id) {
       alert("That spot is taken! Please choose an empty space");
     } else {
@@ -30,14 +35,35 @@ angular.module('ticTacToe.game', [])
     }
   };
 
-  $scope.checkForWin = function() {
-    //if win 
-      //alert($scope.currPlayer.name + ' has won the game!');
-    // else if ($scope.currPlayer === $scope.playerOne)
-      //$scope.currPlayer = $scope.playerTwo;
-    // else
-      //$scope.currPlayer = $scope.playerTwo;
+  $scope.handleMove = function() {
+    if ($scope.checkForWin()) {
+      var resp = confirm(' has won the game! Click "OK" to play again.');
+      if (resp = true) {
+        $scope.resetBoard();
+        $location.path('/game');
+      }
 
+    } else if ($scope.currPlayer === $scope.playerOne.id) {
+        $scope.currPlayer = $scope.playerTwo.id;
+        $scope.computerPlayerMove();
+      } else {
+        $scope.currPlayer = $scope.playerOne.id;
+      }
   };
 
-})
+  $scope.checkForWin = function() {
+    //all that good logic
+    return false;
+  }
+
+  $scope.computerPlayerMove = function() {
+    // get random move..
+    console.log('attempting computer move');
+    setTimeout(function() {
+      $scope.currPlayer = $scope.playerOne.id;
+    }, 200); // change to promise
+    
+  }
+
+});
+
