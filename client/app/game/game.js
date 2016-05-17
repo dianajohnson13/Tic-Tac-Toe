@@ -4,29 +4,23 @@ angular.module('ticTacToe.game', [])
   $scope.board; 
 
   $scope.resetBoard = function() {
-    $scope.board = [
-      ["-", "-", "-"],
-      ["-", "-", "-"],
-      ["-", "-", "-"]
-    ];
+    $scope.board = {
+      TL: {row:0,col:0,spot:"-"}, TM: {row:0,col:1,spot:"-"}, TR: {row:0,col:2,spot:"-"},
+      ML: {row:1,col:0,spot:"-"}, MM: {row:1,col:1,spot:"-"}, MR: {row:1,col:2,spot:"-"},
+      BL: {row:2,col:0,spot:"-"}, BM: {row:2,col:1,spot:"-"}, BR: {row:2,col:2,spot:"-"}
+    };
   };
 
   $scope.resetBoard();
-
-  const modelRef = {
-    TL: {row:0,col:0}, TM: {row:0,col:1}, TR: {row:0,col:2},
-    ML: {row:1,col:0}, MM: {row:1,col:1}, MR: {row:1,col:2},
-    BL: {row:2,col:0}, BM: {row:2,col:1}, BR: {row:2,col:2}
-  }
 
   $scope.playerOne = {name: 'Human', mark: 'X', id: 1};
   $scope.playerTwo = {name: 'Computer', mark: 'O', id: 2};
   $scope.currPlayer = $scope.playerOne.id;
 
   $scope.clickCell = function(cell) {
-    if ($scope.board[modelRef[cell].row][modelRef[cell].col] === "-" && $scope.currPlayer == $scope.playerOne.id) {
+    if ($scope.board[cell].spot === "-" && $scope.currPlayer == $scope.playerOne.id) {
       //mark cell with playersMark
-      $scope.board[modelRef[cell].row][modelRef[cell].col] = $scope.playerOne.mark; 
+      $scope.board[cell].spot = $scope.playerOne.mark; 
       $scope.handleMove();
     } else if ($scope.currPlayer == $scope.playerOne.id) {
       alert("That spot is taken! Please choose an empty space");
@@ -52,7 +46,8 @@ angular.module('ticTacToe.game', [])
   };
 
   $scope.checkForWin = function() {
-    //all that good logic
+    // all that good logic
+    // if no one won, but all spaces are filled.. confirm("game over. no winner")
     return false;
   }
 
