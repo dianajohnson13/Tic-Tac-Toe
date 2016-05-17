@@ -1,9 +1,18 @@
 <!DOCTYPE html>
-<html ng-app='TicTacToe'>
+<html ng-app='ticTacToe'>
   <head>
     <title>TicTacToe</title>
   </head>
   <body>
-    <div>Hello World</div>
+    <h1>Diana's Tic-Tac-Toe</h1>
+    
+    <div ng-view></div>
+
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular-route/angular-route.js"></script>
+
+    <script src="app/game/game.js"></script>
+    <script src="app/services/services.js"></script>
+    <script src="app/app.js"></script>
   </body>
 </html>
