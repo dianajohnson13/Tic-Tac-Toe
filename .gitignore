@@ -35,4 +35,4 @@ bower_components/
 .flooignore
 
 
-client/lib
+client/app/lib
