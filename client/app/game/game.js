@@ -4,7 +4,6 @@ angular.module('ticTacToe.game', [])
   $scope.board; 
   $scope.playsMade;
   $scope.remainingSpots;
-  // add wins and games played
 
   $scope.resetBoard = function() {
     $scope.playsMade = 0;
@@ -15,8 +14,8 @@ angular.module('ticTacToe.game', [])
     };
   };
 
-  $scope.playerOne = {name: 'Human', mark: 'X', id: 1};
-  $scope.playerTwo = {name: 'Computer', mark: 'O', id: 2};
+  $scope.playerOne = {name: 'Human', mark: 'X', gamesPlayed: 0, wins: 0};
+  $scope.playerTwo = {name: 'Computer', mark: 'O'};
   
   $scope.clickCell = function(cell) {
     if ($scope.board[cell].spot === "-" && $scope.currPlayer == $scope.playerOne) {
@@ -33,7 +32,11 @@ angular.module('ticTacToe.game', [])
   $scope.handleMove = function() {
     $scope.playsMade++;
 
-    if ($scope.checkForWin()) {
+    if ($scope.checkForWin()) {  //if won/game over
+      $scope.playerOne.gamesPlayed++;
+      if ($scope.currPlayer === $scope.playerOne) {
+        $scope.playerOne.wins++;
+      }
       var resp = confirm($scope.currPlayer.name + ' has won the game! Click "OK" to play again.');
       if (resp) {
         $location.path('/game');
@@ -48,6 +51,25 @@ angular.module('ticTacToe.game', [])
       $scope.currPlayer = $scope.playerOne;
     }
   };
+
+  $scope.computerPlayerMove = function() {
+    var randomIdx = Math.floor(Math.random()*$scope.remainingSpots.length);
+    var cell = $scope.remainingSpots[randomIdx];
+    
+    $scope.removeFromRemaining(randomIdx);
+    $scope.board[cell].spot = $scope.currPlayer.mark; 
+    $scope.handleMove();
+  }
+
+  $scope.removeFromRemaining = function(idx) {
+    $scope.remainingSpots = $scope.remainingSpots.slice(0, idx).concat($scope.remainingSpots.slice(idx+1))
+  }
+
+  $scope.initGame = function() {
+    $scope.resetBoard();
+    $scope.remainingSpots = Object.keys($scope.board);
+    $scope.currPlayer = $scope.playerOne
+  }
 
   $scope.checkForWin = function() {
     var mark = $scope.currPlayer.mark;
@@ -68,25 +90,6 @@ angular.module('ticTacToe.game', [])
       }
     }
     return false;
-  }
-
-  $scope.computerPlayerMove = function() {
-    var randomIdx = Math.floor(Math.random()*$scope.remainingSpots.length);
-    var cell = $scope.remainingSpots[randomIdx];
-    
-    $scope.removeFromRemaining(randomIdx);
-    $scope.board[cell].spot = $scope.currPlayer.mark; 
-    $scope.handleMove();
-  }
-
-  $scope.removeFromRemaining = function(idx) {
-    $scope.remainingSpots = $scope.remainingSpots.slice(0, idx).concat($scope.remainingSpots.slice(idx+1))
-  }
-
-  $scope.initGame = function() {
-    $scope.resetBoard();
-    $scope.remainingSpots = Object.keys($scope.board);
-    $scope.currPlayer = $scope.playerOne
   }
    
   $scope.initGame();
