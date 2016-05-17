@@ -1,0 +1,27 @@
+body {
+  margin: 0px 10px;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+#board {
+  margin: 20px;
+  padding: 20px;
+  width: 900px;
+}
+
+.row {
+  
+}
+
+#board span {
+  text-align: center;
+  display: inline-block;
+  font-size: 80px;
+  padding: 20px;
+  width: 100px;
+  height: 100px;
+  border: solid 6px;
+}
