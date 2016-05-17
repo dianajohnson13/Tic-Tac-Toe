@@ -3,7 +3,7 @@ angular.module('ticTacToe.game', [])
 .controller('GameController', function($scope, $location) {
   $scope.board; 
   $scope.playsMade;
-
+  $scope.remainingSpots;
   // add wins and games played
 
   $scope.resetBoard = function() {
@@ -15,15 +15,14 @@ angular.module('ticTacToe.game', [])
     };
   };
 
-  $scope.resetBoard();
-
   $scope.playerOne = {name: 'Human', mark: 'X', id: 1};
   $scope.playerTwo = {name: 'Computer', mark: 'O', id: 2};
-  $scope.currPlayer = $scope.playerOne
+  
 
   $scope.clickCell = function(cell) {
     if ($scope.board[cell].spot === "-" && $scope.currPlayer == $scope.playerOne) {
-      $scope.board[cell].spot = $scope.currPlayer.mark; 
+      $scope.board[cell].spot = $scope.currPlayer.mark;
+      $scope.removeFromRemaining($scope.remainingSpots.indexOf(cell));
       $scope.handleMove();
     } else if ($scope.currPlayer === $scope.playerOne) {
       alert("That spot is taken! Please choose an empty space");
@@ -38,7 +37,7 @@ angular.module('ticTacToe.game', [])
     if ($scope.checkForWin()) {
       var resp = confirm($scope.currPlayer.name + ' has won the game! Click "OK" to play again.');
       if (resp) {
-        $scope.resetBoard();
+        $scope.initGame();
         $location.path('/game');
       }
     }
@@ -65,7 +64,7 @@ angular.module('ticTacToe.game', [])
     if ($scope.playsMade === 9) {
       var resp = confirm('Tie Game. Click "OK" to play again');
       if (resp) {
-        $scope.resetBoard();
+        $scope.initGame();
         $location.path('/game');
       }
     }
@@ -73,10 +72,23 @@ angular.module('ticTacToe.game', [])
   }
 
   $scope.computerPlayerMove = function() {
-    var cell = 'TL'; // SWITCH OUT TEMPORY HARD CODING!!
+    var randomIdx = Math.floor(Math.random()*$scope.remainingSpots.length);
+    var cell = $scope.remainingSpots[randomIdx];
+    $scope.removeFromRemaining(randomIdx);
     $scope.board[cell].spot = $scope.currPlayer.mark; 
     $scope.handleMove();
   }
 
+  $scope.removeFromRemaining = function(idx) {
+    $scope.remainingSpots = $scope.remainingSpots.slice(0, idx).concat($scope.remainingSpots.slice(idx+1))
+  }
+
+  $scope.initGame = function() {
+    $scope.resetBoard();
+    $scope.remainingSpots = Object.keys($scope.board);
+    $scope.currPlayer = $scope.playerOne
+  }
+   
+  $scope.initGame();
 });
 
