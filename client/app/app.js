@@ -10,7 +10,7 @@ angular.module('ticTacToe', [
     })
     .otherwise({redirectTo: '/game'});
 
-  $locationProvider.html5Mode(true);
+  // $locationProvider.html5Mode(true);
 }).run(function($location) {
   
 });
