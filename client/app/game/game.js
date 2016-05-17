@@ -18,7 +18,6 @@ angular.module('ticTacToe.game', [])
   $scope.playerOne = {name: 'Human', mark: 'X', id: 1};
   $scope.playerTwo = {name: 'Computer', mark: 'O', id: 2};
   
-
   $scope.clickCell = function(cell) {
     if ($scope.board[cell].spot === "-" && $scope.currPlayer == $scope.playerOne) {
       $scope.board[cell].spot = $scope.currPlayer.mark;
@@ -37,12 +36,12 @@ angular.module('ticTacToe.game', [])
     if ($scope.checkForWin()) {
       var resp = confirm($scope.currPlayer.name + ' has won the game! Click "OK" to play again.');
       if (resp) {
-        $scope.initGame();
         $location.path('/game');
+        $scope.initGame();
       }
     }
 
-    if ($scope.currPlayer === $scope.playerOne) {
+    if ($scope.currPlayer === $scope.playerOne && $scope.playsMade > 0) {
       $scope.currPlayer = $scope.playerTwo;
       $scope.computerPlayerMove();
     } else {
@@ -64,8 +63,8 @@ angular.module('ticTacToe.game', [])
     if ($scope.playsMade === 9) {
       var resp = confirm('Tie Game. Click "OK" to play again');
       if (resp) {
-        $scope.initGame();
         $location.path('/game');
+        $scope.initGame();
       }
     }
     return false;
@@ -74,6 +73,7 @@ angular.module('ticTacToe.game', [])
   $scope.computerPlayerMove = function() {
     var randomIdx = Math.floor(Math.random()*$scope.remainingSpots.length);
     var cell = $scope.remainingSpots[randomIdx];
+    
     $scope.removeFromRemaining(randomIdx);
     $scope.board[cell].spot = $scope.currPlayer.mark; 
     $scope.handleMove();
