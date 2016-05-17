@@ -19,39 +19,41 @@ angular.module('ticTacToe.game', [])
 
   $scope.playerOne = {name: 'Human', mark: 'X', id: 1};
   $scope.playerTwo = {name: 'Computer', mark: 'O', id: 2};
-  $scope.currPlayer = $scope.playerOne.id;
+  $scope.currPlayer = $scope.playerOne
 
   $scope.clickCell = function(cell) {
-    if ($scope.board[cell].spot === "-" && $scope.currPlayer == $scope.playerOne.id) {
-      $scope.board[cell].spot = $scope.playerOne.mark; 
-      $scope.handleMove($scope.playerOne.name, $scope.playerOne.mark);
-    } else if ($scope.currPlayer == $scope.playerOne.id) {
+    if ($scope.board[cell].spot === "-" && $scope.currPlayer == $scope.playerOne) {
+      $scope.board[cell].spot = $scope.currPlayer.mark; 
+      $scope.handleMove();
+    } else if ($scope.currPlayer === $scope.playerOne) {
       alert("That spot is taken! Please choose an empty space");
     } else {
       alert("It's not your turn yet!");
     }
   };
 
-  $scope.handleMove = function(player, mark) {
+  $scope.handleMove = function() {
     $scope.playsMade++;
 
-    if ($scope.checkForWin(mark)) {
-      var resp = confirm(player + ' has won the game! Click "OK" to play again.');
+    if ($scope.checkForWin()) {
+      var resp = confirm($scope.currPlayer.name + ' has won the game! Click "OK" to play again.');
       if (resp) {
         $scope.resetBoard();
         $location.path('/game');
       }
     }
 
-    if ($scope.currPlayer === $scope.playerOne.id) {
-      $scope.currPlayer = $scope.playerTwo.id;
+    if ($scope.currPlayer === $scope.playerOne) {
+      $scope.currPlayer = $scope.playerTwo;
       $scope.computerPlayerMove();
     } else {
-      $scope.currPlayer = $scope.playerOne.id;
+      $scope.currPlayer = $scope.playerOne;
     }
   };
 
-  $scope.checkForWin = function(mark) {
+  $scope.checkForWin = function() {
+    var mark = $scope.currPlayer.mark;
+    // switch out for better logic
     if ($scope.board['TL'].spot === mark && $scope.board['TM'].spot ===  mark && $scope.board['TR'].spot === mark) return true;
     if ($scope.board['ML'].spot === mark && $scope.board['MM'].spot ===  mark && $scope.board['MR'].spot === mark) return true;
     if ($scope.board['BL'].spot === mark && $scope.board['BM'].spot ===  mark && $scope.board['BR'].spot === mark) return true;
@@ -71,8 +73,9 @@ angular.module('ticTacToe.game', [])
   }
 
   $scope.computerPlayerMove = function() {
-    // get random move..
-    $scope.handleMove($scope.playerTwo.name, $scope.playerTwo.mark);
+    var cell = 'TL'; // SWITCH OUT TEMPORY HARD CODING!!
+    $scope.board[cell].spot = $scope.currPlayer.mark; 
+    $scope.handleMove();
   }
 
 });
