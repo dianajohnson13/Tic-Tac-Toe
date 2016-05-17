@@ -1,17 +1,17 @@
 <div id="board">
   <div class="row">
-    <span ng-click="clickCell()">{{board[0][0]}}</span>
-    <span>{{board[0][1]}}</span>
-    <span>{{board[0][2]}}</span>
+    <span ng-click="clickCell('TL')">{{board[0][0]}}</span>
+    <span ng-click="clickCell('TM')">{{board[0][1]}}</span>
+    <span ng-click="clickCell('TR')">{{board[0][2]}}</span>
   </div>
   <div class="row">
-    <span ng-click="">{{board[1][0]}}</span>
-    <span>{{board[1][1]}}</span>
-    <span>{{board[1][2]}}</span>
+    <span ng-click="clickCell('ML')">{{board[1][0]}}</span>
+    <span ng-click="clickCell('MM')">{{board[1][1]}}</span>
+    <span ng-click="clickCell('MR')">{{board[1][2]}}</span>
   </div>
   <div class="row">
-    <span>{{board[2][0]}}</span>
-    <span>{{board[2][1]}}</span>
-    <span>{{board[2][2]}}</span>
+    <span ng-click="clickCell('BL')">{{board[2][0]}}</span>
+    <span ng-click="clickCell('BM')">{{board[2][1]}}</span>
+    <span ng-click="clickCell('BR')">{{board[2][2]}}</span>
   </div>
 </div>
