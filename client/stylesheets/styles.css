@@ -8,8 +8,9 @@ h1 {
 
 #board {
   margin: 20px;
-  padding: 20px;
-  width: 900px;
+  padding: 5px;
+  width: 455px;
+  background-color: black;
 }
 
 .row {
@@ -22,7 +23,8 @@ h1 {
   padding: 20px;
   width: 100px;
   height: 100px;
-  border: solid 6px;
+  border: solid 4px;
+  background: white;
 }
 
 #scoreboard {
