@@ -105,7 +105,7 @@ angular.module('ticTacToe.game', [])
   }
 
   $scope.handleTie = function() {
-
+    $scope.playerOne.gamesPlayed++;
     setTimeout(function(){
       var resp = confirm('Tie Game. Click "OK" to play again');
     if (resp) {
