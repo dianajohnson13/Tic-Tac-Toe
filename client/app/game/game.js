@@ -12,6 +12,7 @@ angular.module('ticTacToe.game', [])
       ML: {row:1,col:0,spot:"-"}, MM: {row:1,col:1,spot:"-"}, MR: {row:1,col:2,spot:"-"},
       BL: {row:2,col:0,spot:"-"}, BM: {row:2,col:1,spot:"-"}, BR: {row:2,col:2,spot:"-"}
     };
+    //$scope.$apply();
   };
 
   $scope.playerOne = {name: 'Human', mark: 'X', gamesPlayed: 0, wins: 0};
@@ -19,8 +20,7 @@ angular.module('ticTacToe.game', [])
   
   $scope.clickCell = function(cell) {
     if ($scope.board[cell].spot === "-" && $scope.currPlayer == $scope.playerOne) {
-      $scope.board[cell].spot = $scope.currPlayer.mark;
-      $scope.removeFromRemaining($scope.remainingSpots.indexOf(cell));
+      $scope.markPosition(cell)
       $scope.handleMove();
     } else if ($scope.currPlayer === $scope.playerOne) {
       alert("That spot is taken! Please choose an empty space");
@@ -29,24 +29,24 @@ angular.module('ticTacToe.game', [])
     }
   };
 
+  $scope.markPosition = function(cell) {
+    $scope.board[cell].spot = $scope.currPlayer.mark;
+    $scope.removeFromRemaining($scope.remainingSpots.indexOf(cell));
+  }
+
   $scope.handleMove = function() {
     $scope.playsMade++;
+    $scope.checkForWin();
+  };
 
-    if ($scope.checkForWin()) {  //if won/game over
-      $scope.playerOne.gamesPlayed++;
-      if ($scope.currPlayer === $scope.playerOne) $scope.playerOne.wins++;
-      
-      var resp = confirm($scope.currPlayer.name + ' has won the game! Click "OK" to play again.');
-      if (resp) $scope.initGame();
-    }
-
-    if ($scope.currPlayer === $scope.playerOne && $scope.playsMade > 0) {
+  $scope.changePlayer = function() {
+    if ($scope.currPlayer === $scope.playerOne) {
       $scope.currPlayer = $scope.playerTwo;
       $scope.computerPlayerMove();
     } else {
       $scope.currPlayer = $scope.playerOne;
     }
-  };
+  }
 
   $scope.computerPlayerMove = function() {
     var randomIdx = Math.floor(Math.random()*$scope.remainingSpots.length);
@@ -62,30 +62,60 @@ angular.module('ticTacToe.game', [])
   }
 
   $scope.initGame = function() {
+    console.log("INITTING!!")
     $location.path('/game');
     $scope.resetBoard();
     $scope.remainingSpots = Object.keys($scope.board);
-    $scope.currPlayer = $scope.playerOne
+    $scope.currPlayer = $scope.playerOne;
   }
 
   $scope.checkForWin = function() {
     var mark = $scope.currPlayer.mark;
     // switch out for better logic
-    if ($scope.board['TL'].spot === mark && $scope.board['TM'].spot ===  mark && $scope.board['TR'].spot === mark) return true;
-    if ($scope.board['ML'].spot === mark && $scope.board['MM'].spot ===  mark && $scope.board['MR'].spot === mark) return true;
-    if ($scope.board['BL'].spot === mark && $scope.board['BM'].spot ===  mark && $scope.board['BR'].spot === mark) return true;
-    if ($scope.board['TL'].spot === mark && $scope.board['ML'].spot ===  mark && $scope.board['BL'].spot === mark) return true;
-    if ($scope.board['TM'].spot === mark && $scope.board['MM'].spot ===  mark && $scope.board['BM'].spot === mark) return true;
-    if ($scope.board['TR'].spot === mark && $scope.board['MR'].spot ===  mark && $scope.board['BR'].spot === mark) return true;
-    if ($scope.board['TL'].spot === mark && $scope.board['MM'].spot ===  mark && $scope.board['BR'].spot === mark) return true;
-    if ($scope.board['BL'].spot === mark && $scope.board['MM'].spot ===  mark && $scope.board['TR'].spot === mark) return true;
-    if ($scope.playsMade === 9) {
-      var resp = confirm('Tie Game. Click "OK" to play again');
-      if (resp) $scope.initGame();
+    if (($scope.board['TL'].spot === mark && $scope.board['TM'].spot ===  mark && $scope.board['TR'].spot === mark)||
+     ($scope.board['ML'].spot === mark && $scope.board['MM'].spot ===  mark && $scope.board['MR'].spot === mark)||
+     ($scope.board['BL'].spot === mark && $scope.board['BM'].spot ===  mark && $scope.board['BR'].spot === mark)||
+     ($scope.board['TL'].spot === mark && $scope.board['ML'].spot ===  mark && $scope.board['BL'].spot === mark)||
+     ($scope.board['TM'].spot === mark && $scope.board['MM'].spot ===  mark && $scope.board['BM'].spot === mark)||
+     ($scope.board['TR'].spot === mark && $scope.board['MR'].spot ===  mark && $scope.board['BR'].spot === mark)||
+     ($scope.board['TL'].spot === mark && $scope.board['MM'].spot ===  mark && $scope.board['BR'].spot === mark)||
+     ($scope.board['BL'].spot === mark && $scope.board['MM'].spot ===  mark && $scope.board['TR'].spot === mark)) 
+    {
+      $scope.handleWin();
+    } else if ($scope.playsMade === 9) {
+      $scope.handleTie();
+    } else {
+      $scope.changePlayer();
     }
-    return false;
   }
-   
+
+  $scope.handleWin = function() {
+    $scope.playerOne.gamesPlayed++;
+    if ($scope.currPlayer === $scope.playerOne) {
+      $scope.playerOne.wins++;
+    }
+    setTimeout(function(){
+      var resp = confirm($scope.currPlayer.name + ' has won the game! Click "OK" to play again.');
+    if (resp) {
+      $scope.initGame();
+    }
+    $scope.$apply();
+    },1);
+    
+  }
+
+  $scope.handleTie = function() {
+
+    setTimeout(function(){
+      var resp = confirm('Tie Game. Click "OK" to play again');
+    if (resp) {
+      $scope.initGame();
+    }
+    $scope.$apply();
+    },1);
+
+  }
+
   $scope.initGame();
 });
 
